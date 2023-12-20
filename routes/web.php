@@ -23,3 +23,5 @@ Route::get('/about',function(){
 Route::get('/contact',function(){
     return view('posts.contact');
 })->name('contact');
+
+Route::post('/contact',[[PostController::class,'contact']]);

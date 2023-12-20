@@ -21,6 +21,7 @@
 <!-- Page Header-->
 @yield('header')
 @yield('aboutHeader')
+@yield('contactHeader')
 <!-- Main Content-->
 <main class="mb-4">
     @yield('content')

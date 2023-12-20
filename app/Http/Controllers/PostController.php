@@ -27,6 +27,15 @@ class PostController extends Controller
         return view('posts.singlePost', ['post' => $post]);
     }
 
+    public function contact(){
+        $result=[
+            'success' => true ,
+            'message' =>'successfully Thinyou ...'
+        ];
+        
+        return $result;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
