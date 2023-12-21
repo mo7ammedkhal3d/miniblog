@@ -27,13 +27,13 @@ class PostController extends Controller
         return view('posts.singlePost', ['post' => $post]);
     }
 
-    public function contact(){
+    public function contact(Request $request){
         $result=[
             'success' => true ,
-            'message' =>'successfully Thinyou ...'
+            'message' =>'successfully Thank you  .... '. $request->input('name')
         ];
         
-        return $result;
+        return json_encode($result);
     }
 
     /**

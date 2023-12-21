@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\author;
 use Illuminate\Http\Request;
-
-class AuthorController extends Controller
+use App\Models\author;
+class AdminAuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
+        $authors= author::all();
+        return json_encode($authors);
     }
 
     /**
@@ -34,7 +34,7 @@ class AuthorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(author $author)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +42,7 @@ class AuthorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(author $author)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +50,7 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, author $author)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +58,7 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(author $author)
+    public function destroy(string $id)
     {
         //
     }

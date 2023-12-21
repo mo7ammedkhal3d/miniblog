@@ -7,7 +7,8 @@
         <div class="col-md-10 col-lg-8 col-xl-7">
             <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
             <div class="my-5">
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                <form id="contactForm" method="POST">
+                    @csrf
                     <div class="form-floating">
                         <input class="form-control" name="name" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                         <label for="name">Name</label>
@@ -54,36 +55,53 @@
         </div>
     </div>
 </div>
+    <script src="{{asset('assets/lib/sweetalert/sweetalert.min.js')}}"></script>
     <script>
-        btnSend = document.getElementById('btnSend');
-        btnSend.addEventListener('click', function (){
-                var formData = new FormData(document.getElementById('contactForm'));
-                fetch('http://127.0.0.1:8000/contact', {
+        contactForm = document.getElementById("contactForm");
+        contactForm.addEventListener("submit", function (event) {
+            // Prevent the default form submission
+            event.preventDefault();
+            
+            var formData = new FormData(document.getElementById('contactForm'));
+            
+            fetch('http://127.0.0.1:8000/contact', {
                 method: 'POST',
                 body: formData,
+                headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
             })
             .then(response => {  
+                console.log('Response status:', response.status); // Log the response status
+
                 if (!response.ok) {
-                throw new Error('Network response was not ok');
+                    throw new Error('Network response was not ok');
                 }
+                
                 return response.json();
             })
-                .then(data => {data.success
-                    if(data.success){
-                        swal({
-                            //  title: title,
-                            text: date.message,
-                            content: true,
-                            icon: "success",
-                            classname: 'swal-IW',
-                            timer: 1700,
-                            buttons: false,
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error during fetch operation:', error);
-                });
+            .then(data => {
+                if (data.success) {
+                    contactForm.reset();
+                    swal({
+                        //  title: title,
+                        text: data.message,
+                        content: true,
+                        icon: "success",
+                        classname: 'swal-IW',
+                        timer: 1700,
+                        buttons: false,
+                    });
+                    setTimeout(function() {
+                    window.location.href = '/';
+                    }, 1500);
+                    
+                }
+            })
+            .catch(error => {
+                console.error('Error during fetch operation:', error);
+            });
+        });
     </script>
 @endsection
 @include('layouts.footer')

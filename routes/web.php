@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use app\Http\Controllers\AuthorController;
 use App\Http\Controllers\PostController;;
+use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\AdminAuthorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +25,9 @@ Route::get('/about',function(){
 Route::get('/contact',function(){
     return view('posts.contact');
 })->name('contact');
-
-Route::post('/contact',[[PostController::class,'contact']]);
+Route::post('/contact',[PostController::class,'contact']);
+Route::get('/admin', function(){
+    return view('admin.postdashboard');
+})->name('admin');
+Route::resource('posts',AdminPostController::class);
+Route::resource('authors',AdminAuthorController::class);
